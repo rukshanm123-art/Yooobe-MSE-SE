@@ -5,7 +5,7 @@ import math  #built-in package
 
 def fibonacci(n):
     """
-    Same simple Fibonacci function as in Part 1
+    Same Fibonacci function as in Part 1
     """
     if n <= 0:
         return []
@@ -20,7 +20,7 @@ def fibonacci(n):
     return fib_series
 
 
-#Now I replace my own factorial function with math.factorial
+#Now I replace my factorial function with math.factorial
 
 
 #Main program

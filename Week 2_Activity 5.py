@@ -1,5 +1,5 @@
 
-class MathSeriesCalculator:
+class MathCalculator:
     #a class to calculate factorial and Fibonacci.
 
     def factorial(self, n):
@@ -34,7 +34,7 @@ class MathSeriesCalculator:
 
 if __name__ == "__main__":
     #create an object of the MathSeriesCalculator class
-    calculator = MathSeriesCalculator()
+    calculator = MathCalculator()
 
     print("Choose an option:")
     print("1. Factorial")

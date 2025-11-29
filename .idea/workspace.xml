@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef7b8e14-123e-47b8-bb59-84dd7fe90856" name="Changes" comment="Push">
-      <change afterPath="$PROJECT_DIR$/Week 2 - Activity 4.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Week 2_Activity 5.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Week2_Activity2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Week2_Activity2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +55,7 @@
     "Python.Activity 3 - Part 2.executor": "Run",
     "Python.Activity 3.executor": "Run",
     "Python.Week 2 - Activity 4.executor": "Run",
+    "Python.Week 2_Activity 5.executor": "Run",
     "Python.Week2_Activity2.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -104,7 +104,23 @@
       <option name="project" value="LOCAL" />
       <updated>1764371881627</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Push">
+      <option name="closed" value="true" />
+      <created>1764406975466</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1764406975466</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Push">
+      <option name="closed" value="true" />
+      <created>1764407014853</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1764407014853</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

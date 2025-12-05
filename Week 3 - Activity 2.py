@@ -1,4 +1,4 @@
-class FileAnalyzer:
+class FileReader:
     def __init__(self, filepath):
         #Initialize with the path to the file.
         self.filepath = filepath
@@ -44,7 +44,7 @@ if __name__ == "__main__":
     )
 
     #Initialize the OOP object
-    analyzer = FileAnalyzer(filepath)
+    analyzer = FileReader(filepath)
 
     #Append the "End of File" message to the file (this step does NOT overwrite)
     analyzer.append_end_of_file_message(end_message)

@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef7b8e14-123e-47b8-bb59-84dd7fe90856" name="Changes" comment="Push">
+      <change afterPath="$PROJECT_DIR$/Week 2 - Activity 7.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Week 3 - Activity 1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,7 +58,11 @@
     "Python.Fact_fib_class.executor": "Run",
     "Python.Fact_fib_class_update.executor": "Run",
     "Python.Week 2 - Activity 4.executor": "Run",
+    "Python.Week 2 - Activity 6.executor": "Run",
+    "Python.Week 2 - Activity 7.executor": "Run",
     "Python.Week 2_Activity 5.executor": "Run",
+    "Python.Week 3 - Activity 1.1.executor": "Run",
+    "Python.Week 3 - Activity 1.executor": "Run",
     "Python.Week2_Activity2.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -137,7 +143,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764445658439</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Push">
+      <option name="closed" value="true" />
+      <created>1764847465177</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1764847465178</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

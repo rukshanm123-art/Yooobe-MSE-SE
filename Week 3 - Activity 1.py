@@ -11,7 +11,7 @@ class FileReader:
         try:
             with open(self.filepath, 'r', encoding='utf-8') as file:
                 self.content = file.read()
-                print("--- File Content ---")
+                print(" File Content ")
                 print(self.content)
         except FileNotFoundError:
             print(f"Error: The file '{self.filepath}' was not found.")

@@ -1,6 +1,6 @@
 """
 
-PROJECT: College Enrollment Database Management System (Week 3 - Activity 4)
+PROJECT: College Database Management System (Week 3 - Activity 4)
 
 This project uses Python's Object-Oriented Programming (OOP) to build and manage a basic College Database using the SQLite tool.
 I created a "CollegeDB" class that handles everything setting up the tables for Students, Courses, and Teachers,

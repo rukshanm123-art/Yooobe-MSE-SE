@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef7b8e14-123e-47b8-bb59-84dd7fe90856" name="Changes" comment="Push">
-      <change afterPath="$PROJECT_DIR$/Week 3 - Activity 4.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Week 3/Week 3 - Activity 4.py" beforeDir="false" afterPath="$PROJECT_DIR$/Week 3/Week 3 - Activity 4.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,9 +71,20 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/rukshandesilva/PycharmProjects/PythonProjectActivities/Week 3",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Week 3" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Week 3" />
+      <recent name="$PROJECT_DIR$/Week 2" />
+      <recent name="$PROJECT_DIR$/Week 1" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -193,7 +204,23 @@
       <option name="project" value="LOCAL" />
       <updated>1764967230686</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Push">
+      <option name="closed" value="true" />
+      <created>1765581607233</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1765581607233</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Push">
+      <option name="closed" value="true" />
+      <created>1765581937132</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1765581937132</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

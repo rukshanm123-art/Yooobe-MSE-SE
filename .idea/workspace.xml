@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef7b8e14-123e-47b8-bb59-84dd7fe90856" name="Changes" comment="Push">
-      <change afterPath="$PROJECT_DIR$/Week 5/Week 5 - Activity 5.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Week 5/Week 5 - Activity 6.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Week 5/Week 5 - Activity 7.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Week 6/Week6_Act_1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -18,6 +16,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Python Script" />
       </list>
     </option>
@@ -51,6 +50,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.Activity 1.executor": "Run",
     "Python.Activity 2.executor": "Run",
@@ -68,21 +68,24 @@
     "Python.Week 3 - Activity 4.executor": "Run",
     "Python.Week 5 - Activity 5.executor": "Run",
     "Python.Week 5 - Activity 6.executor": "Run",
-    "Python.Week 5 - Activity 7.executor": "Debug",
+    "Python.Week 5 - Activity 7.executor": "Run",
     "Python.Week 5 - Activity4.executor": "Run",
     "Python.Week2_Activity2.executor": "Run",
+    "Python.Week6_Act_1.executor": "Run",
     "Python.rental.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/rukshandesilva/PycharmProjects/PythonProjectActivities/Week 3",
+    "last_opened_file_path": "/Users/rukshandesilva/Desktop/untitled folder",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$USER_HOME$/Desktop/untitled folder" />
+      <recent name="$USER_HOME$/Desktop" />
       <recent name="$PROJECT_DIR$/Week 3" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -242,7 +245,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766262111101</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Push">
+      <option name="closed" value="true" />
+      <created>1766265659954</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1766265659954</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

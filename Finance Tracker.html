@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Finance.NZ">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/10543/10543207.png">
+    <title>Finance Pro NZ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .tab-content { display:none; }
+        .tab-content.active { display:block; }
+        input, select { font-size:16px!important; }
+        .nav-btn { filter: grayscale(1); transition: 0.2s; opacity: 0.6; }
+        .nav-btn.active { filter: grayscale(0); transform: scale(1.2); opacity: 1; }
+        .card { background: white; border-radius: 1.5rem; padding: 1.25rem; border: 1px solid #e2e8f0; }
+        .dark .card { background: #0f172a; border-color: #1e293b; }
+        .progress-bar { height: 16px; border-radius: 8px; background: #e2e8f0; overflow: hidden; position: relative; }
+        .dark .progress-bar { background: #1e293b; }
+        .progress-fill { height: 100%; transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .progress-label { position: absolute; width: 100%; text-align: center; font-size: 9px; font-weight: 800; line-height: 16px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-24">
+
+<header class="sticky top-0 z-40 bg-blue-600 p-6 text-white shadow-lg rounded-b-3xl">
+    <div class="flex justify-between items-center">
+        <div>
+            <h1 id="viewTitle" class="text-2xl font-black"></h1>
+            <p id="ftsCountdown" class="text-[10px] font-bold opacity-80 uppercase tracking-widest">NZ Fiscal Tracker</p>
+        </div>
+        <button onclick="toggleDarkMode()" class="bg-blue-700 p-2 rounded-full shadow-inner">🌓</button>
+    </div>
+    <select id="filterMonth" onchange="updateUI()" class="w-full bg-blue-500 text-white border-none rounded-xl font-bold p-3 mt-4 outline-none">
+        <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+        <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+        <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+        <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+    </select>
+</header>
+
+<main class="p-4 max-w-2xl mx-auto space-y-6">
+    <section id="dashboard" class="tab-content active space-y-4">
+        <div id="allowanceCard" class="p-6 rounded-3xl text-white shadow-xl">
+            <p id="allowanceLabel" class="text-[10px] font-bold opacity-80 uppercase"></p>
+            <h2 id="dailyLimit" class="text-5xl font-black">$0.00</h2>
+            <p id="daysToPayday" class="text-xs font-bold mt-2 opacity-90"></p>
+        </div>
+
+        <div class="card space-y-5">
+            <div class="space-y-4">
+                <div>
+                    <div class="flex justify-between text-[10px] font-black mb-1 uppercase text-slate-400"><span>Income Goal</span><span id="incGoalText">0%</span></div>
+                    <div class="progress-bar">
+                        <div id="incFill" class="progress-fill bg-emerald-500" style="width: 0%"></div>
+                        <div id="incNumLabel" class="progress-label"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-[10px] font-black mb-1 uppercase text-slate-400"><span>Savings Goal</span><span id="saveGoalText">0%</span></div>
+                    <div class="progress-bar">
+                        <div id="saveFill" class="progress-fill" style="width: 0%"></div>
+                        <div id="saveNumLabel" class="progress-label"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="text-xs font-black mb-3 uppercase text-slate-400">Weekly Performance</h3>
+            <div id="weeklyRollup" class="space-y-3"></div>
+        </div>
+
+        <div class="card p-6">
+            <canvas id="mainChart" height="200"></canvas>
+        </div>
+    </section>
+
+    <section id="work" class="tab-content space-y-4">
+        <div class="card p-6">
+            <h2 class="font-black mb-4">Log Work</h2>
+            <div class="grid grid-cols-2 gap-3">
+                <input type="date" id="workDate" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none">
+                <input type="number" id="workHours" placeholder="Hours" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none">
+            </div>
+            <button onclick="addWork()" class="w-full bg-blue-600 text-white font-black py-4 rounded-xl mt-4">Record Earnings</button>
+        </div>
+        <div id="weeklyWorkSummary" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide"></div>
+        <div id="workList" class="space-y-2"></div>
+    </section>
+
+    <section id="expenses" class="tab-content space-y-4">
+        <div class="card p-6 border-red-100 dark:border-red-900">
+            <h2 class="font-black mb-4">New Expense</h2>
+            <input type="date" id="expDate" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none mb-2">
+            <input type="text" id="expName" placeholder="Description" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none mb-2">
+            <input type="number" id="expAmt" placeholder="NZ$" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none">
+            <button onclick="addExp()" class="w-full bg-red-500 text-white font-black py-4 rounded-xl mt-4">Add Expense</button>
+        </div>
+        <div id="expList" class="space-y-2"></div>
+    </section>
+
+    <section id="debts" class="tab-content space-y-4">
+        <div class="card p-6 border-amber-100 dark:border-amber-900">
+            <h2 class="font-black mb-4">Debt Payments</h2>
+            <input type="text" id="debtName" placeholder="Account Name" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none mb-2">
+            <input type="number" id="debtTotal" placeholder="Total Balance" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none mb-2">
+            <input type="number" id="debtMin" placeholder="Monthly Min Payment" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none">
+            <button onclick="addDebt()" class="w-full bg-amber-500 text-white font-black py-4 rounded-xl mt-4">Add Debt</button>
+        </div>
+        <div id="debtList" class="space-y-2"></div>
+    </section>
+
+    <section id="setup" class="tab-content space-y-4">
+        <div class="card p-6">
+            <h2 class="font-black mb-4 text-blue-600">Preferences</h2>
+            <div class="space-y-4">
+                <div><label class="text-[10px] font-bold opacity-50 uppercase">Hourly Rate (NZ$)</label><input type="number" id="rate" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none" oninput="saveData()"></div>
+                <div><label class="text-[10px] font-bold opacity-50 uppercase">Monthly Income Target</label><input type="number" id="targetInc" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none" oninput="saveData()"></div>
+                <div><label class="text-[10px] font-bold opacity-50 uppercase">Recurring Fixed Income (e.g. FTS)</label><input type="number" id="ftsAmt" class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none" oninput="saveData()"></div>
+            </div>
+            <button onclick="exportData()" class="w-full bg-slate-100 dark:bg-slate-800 py-4 rounded-xl font-bold mt-6">💾 Backup to JSON</button>
+            <button onclick="clearData()" class="w-full text-red-500 text-xs font-bold mt-4 opacity-50">Factory Reset</button>
+        </div>
+    </section>
+</main>
+
+<nav class="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-t dark:border-slate-800 flex justify-around p-4 pb-8 z-50">
+    <button onclick="showTab('dashboard', this)" class="nav-btn active text-2xl">📊</button>
+    <button onclick="showTab('work', this)" class="nav-btn text-2xl">🕒</button>
+    <button onclick="showTab('expenses', this)" class="nav-btn text-2xl">💸</button>
+    <button onclick="showTab('debts', this)" class="nav-btn text-2xl">💳</button>
+    <button onclick="showTab('setup', this)" class="nav-btn text-2xl">⚙️</button>
+</nav>
+
+<script>
+let chart;
+let db = JSON.parse(localStorage.getItem('finNZ')) || { rate: 25, targetInc: 4500, ftsAmt: 1666, work: [], expenses: [], debts: [], ftsPaid: {} };
+
+function toggleDarkMode() { document.documentElement.classList.toggle('dark'); }
+
+function showTab(id, el){
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    window.scrollTo(0,0);
+}
+
+function getWeekOfMonth(date) {
+    const d = new Date(date);
+    const day = d.getDate();
+    const firstDay = (new Date(d.getFullYear(), d.getMonth(), 1).getDay() + 6) % 7;
+    return Math.ceil((day + firstDay) / 7);
+}
+
+function saveData(){
+    db.rate = parseFloat(document.getElementById('rate').value) || db.rate;
+    db.targetInc = parseFloat(document.getElementById('targetInc').value) || db.targetInc;
+    db.ftsAmt = parseFloat(document.getElementById('ftsAmt').value) || 0;
+    db.work.forEach(w => { w.inc = w.hours * db.rate; });
+    localStorage.setItem('finNZ', JSON.stringify(db));
+    updateUI();
+}
+
+function updateUI(){
+    const now = new Date();
+    const m = parseInt(document.getElementById('filterMonth').value);
+    const y = now.getFullYear();
+    document.getElementById('viewTitle').innerText = document.getElementById('filterMonth').options[m].text;
+
+    const work = db.work.filter(w => w.month === m && w.year === y);
+    const exp = db.expenses.filter(e => e.month === m && e.year === y);
+    const key = `${y}-${m}`;
+
+    // Auto-pay recurring income if past the 25th
+    if(now.getDate() >= 25 && m === now.getMonth() && !db.ftsPaid[key]) {
+        db.ftsPaid[key] = db.ftsAmt;
+    }
+
+    const inc = work.reduce((a, b) => a + b.inc, 0) + (db.ftsPaid[key] || 0);
+    const out = exp.reduce((a, b) => a + b.amt, 0);
+    const debt = db.debts.reduce((a, b) => a + b.min, 0);
+    const numWeeks = Math.ceil((new Date(y, m+1, 0).getDate() + ((new Date(y, m, 1).getDay() + 6) % 7)) / 7);
+    const saveGoal = (numWeeks * 50) + 100;
+    const net = inc - out - debt - saveGoal;
+
+    let daysLeft = 1;
+    if (m === now.getMonth()) {
+        const payday = new Date(y, m, 25);
+        daysLeft = Math.max(1, Math.ceil(((now < payday ? payday : new Date(y, m+1, 0)) - now) / 86400000));
+        document.getElementById('daysToPayday').innerText = `${daysLeft} days until cycle refresh`;
+    } else { daysLeft = 30; }
+
+    const dailyVal = (net / daysLeft);
+    const card = document.getElementById('allowanceCard');
+    if (net >= 0) {
+        card.className = "p-6 rounded-3xl text-white shadow-xl bg-gradient-to-br from-emerald-500 to-teal-600";
+        document.getElementById('allowanceLabel').innerText = "Safe Spend / Day";
+        document.getElementById('dailyLimit').innerText = `$${dailyVal.toFixed(2)}`;
+    } else {
+        card.className = "p-6 rounded-3xl text-white shadow-xl bg-gradient-to-br from-red-600 to-rose-700";
+        document.getElementById('allowanceLabel').innerText = "Daily Deficit";
+        document.getElementById('dailyLimit').innerText = dailyVal < -500 ? "$0.00" : `-$${Math.abs(dailyVal).toFixed(2)}`;
+    }
+
+    // Weekly Calculations (Hide zeros for cleaner UI)
+    const weeklyData = {};
+    for(let i=1; i<=numWeeks; i++) weeklyData[i] = { inc: 0, exp: 0 };
+    work.forEach(w => { weeklyData[getWeekOfMonth(new Date(w.date))].inc += w.inc; });
+    exp.forEach(e => { weeklyData[getWeekOfMonth(new Date(e.date))].exp += e.amt; });
+
+    const rollupEl = document.getElementById('weeklyRollup');
+    rollupEl.innerHTML = '';
+    const workSummaryEl = document.getElementById('weeklyWorkSummary');
+    workSummaryEl.innerHTML = '';
+
+    Object.keys(weeklyData).forEach(w => {
+        const wInc = weeklyData[w].inc;
+        const wExp = weeklyData[w].exp;
+        const wNet = wInc - wExp;
+
+        // Hide empty weeks from rollup
+        if(wInc !== 0 || wExp !== 0) {
+            rollupEl.innerHTML += `
+                <div class="flex justify-between items-center text-[10px] font-black border-b dark:border-slate-800 pb-2">
+                    <span class="opacity-40">WEEK ${w}</span>
+                    <span>$${wInc.toFixed(0)} / $${wExp.toFixed(0)}</span>
+                    <span class="${wNet >= 0 ? 'text-emerald-500' : 'text-red-500'}">$${wNet.toFixed(0)}</span>
+                </div>`;
+        }
+
+        // Hide empty weeks from Work Summary Scroll
+        if(wInc > 0) {
+            workSummaryEl.innerHTML += `
+                <div class="flex-shrink-0 bg-white dark:bg-slate-900 p-3 rounded-2xl border dark:border-slate-800 min-w-[100px] shadow-sm">
+                    <p class="text-[8px] font-bold opacity-40 uppercase">Week ${w}</p>
+                    <p class="text-sm font-black text-blue-500">$${wInc.toFixed(0)}</p>
+                </div>`;
+        }
+    });
+
+    const incPct = (inc / db.targetInc) * 100;
+    document.getElementById('incFill').style.width = Math.min(100, incPct) + "%";
+    document.getElementById('incGoalText').innerText = incPct.toFixed(0) + "%";
+    document.getElementById('incNumLabel').innerText = `$${inc.toFixed(0)} / $${db.targetInc}`;
+
+    const actualSave = Math.max(0, inc - out - debt);
+    const savePct = (actualSave / saveGoal) * 100;
+    const sf = document.getElementById('saveFill');
+    sf.style.width = Math.min(100, savePct) + "%";
+    sf.className = "progress-fill " + (savePct < 50 ? "bg-red-500" : (savePct < 100 ? "bg-amber-500" : "bg-blue-500"));
+    document.getElementById('saveGoalText').innerText = savePct.toFixed(0) + "%";
+    document.getElementById('saveNumLabel').innerText = `$${actualSave.toFixed(0)} / $${saveGoal}`;
+
+    renderList('workList', work, 'inc', 'emerald');
+    renderList('expList', exp, 'amt', 'red');
+    renderDebtList();
+    renderChart(inc, out, saveGoal, debt);
+
+    if(document.getElementById('rate')) {
+        document.getElementById('rate').value = db.rate;
+        document.getElementById('targetInc').value = db.targetInc;
+        document.getElementById('ftsAmt').value = db.ftsAmt;
+    }
+}
+
+function renderList(id, items, valKey, color) {
+    const el = document.getElementById(id); el.innerHTML = '';
+    items.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(i => {
+        const type = id === 'workList' ? 'work' : 'expenses';
+        el.innerHTML += `
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl flex justify-between items-center border dark:border-slate-800">
+                <div class="flex flex-col">
+                    <span class="text-[9px] font-black opacity-30 uppercase">${new Date(i.date).toLocaleDateString('en-NZ')}</span>
+                    <span class="text-xs font-bold">${i.name || i.hours + ' hours logged'}</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="font-black text-${color}-500">$${i[valKey].toFixed(2)}</span>
+                    <button class="opacity-20 hover:opacity-100" onclick="deleteItem('${type}', ${i.id})">🗑️</button>
+                </div>
+            </div>`;
+    });
+}
+
+function renderDebtList() {
+    const el = document.getElementById('debtList'); el.innerHTML = '';
+    db.debts.forEach(d => {
+        el.innerHTML += `
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border dark:border-slate-800 space-y-2">
+                <div class="flex justify-between">
+                    <div><p class="font-black text-sm uppercase">${d.name}</p><p class="text-[9px] opacity-60">Balance: $${d.total} | Min: $${d.min}/mo</p></div>
+                    <button class="opacity-20" onclick="deleteItem('debts', ${d.id})">🗑️</button>
+                </div>
+            </div>`;
+    });
+}
+
+function renderChart(i, e, s, d){
+    if(chart) chart.destroy();
+    // Logic to only show chart segments > 0
+    const data = [e, s, d, Math.max(0, i-e-s-d)];
+    const labels = ["Spend", "Save", "Debt", "Free"];
+    const colors = ["#f43f5e", "#3b82f6", "#f59e0b", "#10b981"];
+
+    chart = new Chart(document.getElementById('mainChart'), {
+        type: "doughnut",
+        data: {
+            labels: labels,
+            datasets: [{ data: data, backgroundColor: colors, borderWidth: 0 }]
+        },
+        options: { cutout: "80%", plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, font: { weight: 'bold', size: 10 } } } } }
+    });
+}
+
+function addWork(){
+    const dVal = document.getElementById('workDate').value;
+    const hVal = document.getElementById('workHours').value;
+    if(!dVal || isNaN(hVal) || hVal <= 0) return alert("Enter valid date/hours");
+    db.work.push({date:new Date(dVal).toISOString(), hours:parseFloat(hVal), month:new Date(dVal).getMonth(), year:new Date(dVal).getFullYear(), inc:hVal*db.rate, id:Date.now()});
+    saveData();
+}
+
+function addExp(){
+    const dVal = document.getElementById('expDate').value;
+    const aVal = document.getElementById('expAmt').value;
+    const n = document.getElementById('expName').value;
+    if(!dVal || isNaN(aVal) || !n) return alert("Enter valid data");
+    db.expenses.push({date:new Date(dVal).toISOString(), name:n, amt:parseFloat(aVal), month:new Date(dVal).getMonth(), year:new Date(dVal).getFullYear(), id:Date.now()});
+    saveData();
+}
+
+function addDebt(){
+    const n = document.getElementById('debtName').value;
+    const t = parseFloat(document.getElementById('debtTotal').value);
+    const m = parseFloat(document.getElementById('debtMin').value);
+    if(n && t) { db.debts.push({name:n, total:t, min:m||0, id:Date.now()}); saveData(); }
+}
+
+function deleteItem(type, id) {
+    if(confirm("Delete item?")) { db[type] = db[type].filter(i => i.id !== id); saveData(); }
+}
+
+function exportData() {
+    const blob = new Blob([JSON.stringify(db)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = `finance_nz_v20.json`; a.click();
+}
+
+function clearData() { if(confirm("Wipe all data?")) { localStorage.clear(); location.reload(); } }
+
+(function init() {
+    const startNow = new Date();
+    document.getElementById('filterMonth').value = startNow.getMonth();
+    updateUI();
+    document.getElementById('workDate').valueAsDate = startNow;
+    document.getElementById('expDate').valueAsDate = startNow;
+})();
+</script>
+</body>
+</html>

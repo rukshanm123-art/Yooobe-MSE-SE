@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef7b8e14-123e-47b8-bb59-84dd7fe90856" name="Changes" comment="Push">
-      <change afterPath="$PROJECT_DIR$/Week 6/Week6_Act_1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Week 6/Week6_Act_2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Week 6/Week6_Act_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Week 6/Week6_Act_1.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +73,7 @@
     "Python.Week 5 - Activity4.executor": "Run",
     "Python.Week2_Activity2.executor": "Run",
     "Python.Week6_Act_1.executor": "Run",
+    "Python.Week6_Act_2.executor": "Run",
     "Python.rental.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -253,7 +255,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766265659954</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Push">
+      <option name="closed" value="true" />
+      <created>1769209445145</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1769209445145</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

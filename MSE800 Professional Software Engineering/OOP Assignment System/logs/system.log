@@ -1,0 +1,17 @@
+2026-02-01 20:37:14,766 - SQLite DB not found. Skipping user load.
+2026-02-01 20:37:14,767 - SQLite DB not found. Skipping car load.
+2026-02-01 20:39:57,463 - Admin added car: To ee (ID: 1)
+2026-02-01 20:41:01,125 - Admin added car: y rjhrj (ID: 2)
+2026-02-01 20:41:52,194 - Admin updated Car 1 mileage: 4599099 -> 55555
+2026-02-01 20:42:22,296 - Admin removed car ID: 1
+2026-02-01 20:43:37,693 - Admin added car: Toyota corolla (ID: 2)
+2026-02-01 20:44:48,252 - Booking Request: user for Car 2
+2026-02-01 20:44:59,337 - Booking Request: user for Car 2
+2026-02-01 20:46:01,680 - Admin removed car ID: 2
+2026-02-01 20:46:37,592 - Admin added car: Toyota Corolla (ID: 1)
+2026-02-01 20:48:17,533 - Admin added car: Honda Julola (ID: 2)
+2026-02-01 20:49:53,353 - Booking Request: user for Car 2
+2026-02-01 20:50:23,551 - Booking 1 status updated to: Rejected
+2026-02-01 20:50:30,992 - Booking 2 status updated to: Rejected
+2026-02-01 20:50:40,129 - Booking 3 status updated to: Rejected
+2026-02-01 20:51:12,963 - Booking Request: user for Car 1

@@ -1,0 +1,3 @@
+# MSE800 Car Rental System
+# This project uses only Python 3.10+ standard libraries.
+# No external pip installations are required.

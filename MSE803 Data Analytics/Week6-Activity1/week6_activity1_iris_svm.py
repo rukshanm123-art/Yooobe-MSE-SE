@@ -170,9 +170,15 @@ sv = svm_2d.support_vectors_
 ax2.scatter(sv[:, 0], sv[:, 1], s=130, facecolors="none",
             edgecolors="#CC0000", linewidths=1.6, zorder=5,
             label="Support vectors")
+acc_2d = svm_2d.score(X_train_sc[:, [2, 3]], y_train)   # train acc of 2D viz model
+acc_2d_test = svm_2d.score(X_test_sc[:, [2, 3]], y_test)
 ax2.set_xlabel("Petal Length (scaled)", fontsize=10)
 ax2.set_ylabel("Petal Width (scaled)", fontsize=10)
-ax2.set_title("Petal Space: SVM Decision Boundary", fontweight="bold")
+ax2.set_title(
+    f"Petal Space: Linear SVM Decision Boundary\n"
+    f"(2-feature visualisation model — test acc: {acc_2d_test*100:.1f}%)",
+    fontweight="bold", fontsize=9.5
+)
 ax2.legend(fontsize=8, framealpha=0.6)
 ax2.grid(True, alpha=0.25, linestyle=":")
 
@@ -202,14 +208,15 @@ pair_labels = ["setosa\nvs\nversicolor",
                "versicolor\nvs\nvirginica"]
 feat_labels = ["Sepal L", "Sepal W", "Petal L", "Petal W"]
 coef_df = pd.DataFrame(svm.coef_, index=pair_labels, columns=feat_labels)
-sns.heatmap(np.abs(coef_df), annot=coef_df.round(3), fmt=".3f",
-            cmap="YlOrBr", ax=ax4,
+# Use SIGNED values for BOTH color and annotation so the heatmap is consistent
+sns.heatmap(coef_df, annot=coef_df.round(3), fmt=".3f",
+            cmap="coolwarm", center=0, ax=ax4,
             linewidths=0.6,
             annot_kws={"size": 10, "weight": "bold"},
             xticklabels=feat_labels, yticklabels=pair_labels,
-            cbar_kws={"label": "|Coefficient|"})
-ax4.set_title("SVM Linear Coefficients\n(|value| = feature importance per OVO pair)",
-              fontweight="bold", fontsize=9.5)
+            cbar_kws={"label": "Coefficient value"})
+ax4.set_title("SVM Linear Coefficients\n(signed — red=positive push, blue=negative push per OVO pair)",
+              fontweight="bold", fontsize=9.0)
 ax4.tick_params(axis="x", rotation=0, labelsize=9)
 ax4.tick_params(axis="y", rotation=0, labelsize=8)
 

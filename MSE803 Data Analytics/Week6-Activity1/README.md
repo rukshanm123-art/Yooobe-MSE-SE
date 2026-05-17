@@ -1,7 +1,7 @@
 # Week 6 – Activity 1: Iris Dataset — SVM Classification (Linear Kernel)
 
-**Course:** MSE803 Data Analytics | 2511-YCCIA-MSE  
-**Dataset:** Fisher's Iris Dataset (`iris.data`) — 150 samples, 4 features, 3 classes
+**Course:** MSE803 Data Analytics | 2511-YCCIA-MSE
+**Dataset:** Fisher's Iris Dataset — 150 samples, 4 features, 3 classes
 
 ---
 
@@ -9,43 +9,41 @@
 
 | Attribute | Detail |
 |---|---|
+| Source | UCI Machine Learning Repository |
 | Samples | 150 (50 per class) |
-| Features | Sepal Length, Sepal Width, Petal Length, Petal Width (all in cm) |
+| Features | Sepal Length, Sepal Width, Petal Length, Petal Width (cm) |
 | Classes | Iris-setosa, Iris-versicolor, Iris-virginica |
 | Missing Values | None |
-| Duplicates Removed | 3 |
+| Duplicate Rows Removed | 3 |
 
 ---
 
-## Steps
+## Process
 
 ### 1. Data Loading & Cleaning
 - Loaded `iris.data` with no header; assigned column names manually
-- Confirmed **no missing values**
-- Removed **3 duplicate rows** (147 → cleaned, 150 total original)
+- Verified no missing values across all 6 columns
+- Removed 3 duplicate rows (150 → 147 clean samples)
 
 ### 2. Preprocessing
-- Labels encoded with `LabelEncoder`
-- Features scaled with `StandardScaler` (required for SVM distance-based classification)
-- **80/20 stratified train/test split** → 117 train, 30 test
+- Class labels encoded with `LabelEncoder`
+- All 4 features scaled using `StandardScaler` — required for SVM to compute distances fairly
+- Stratified 80/20 train/test split → **117 training, 30 test samples**
 
-### 3. SVM Model — Linear Kernel
-- Model: `SVC(kernel='linear', C=1.0)`
-- Trained on scaled training set
-- Predicted on held-out test set
+### 3. SVM — Linear Kernel
+- `SVC(kernel='linear', C=1.0, random_state=42)`
+- Trained on scaled training set, evaluated on held-out test set
 
 ---
 
-## Evaluation Metrics (Test Set — 30 samples)
+## Evaluation Metrics — Test Set (n = 30)
 
-| Metric | Iris-setosa | Iris-versicolor | Iris-virginica | Overall |
+| Class | Precision | Recall | F1-Score | Support |
 |---|---|---|---|---|
-| Precision | 1.00 | 1.00 | 1.00 | **1.00** |
-| Recall | 1.00 | 1.00 | 1.00 | **1.00** |
-| F1-Score | 1.00 | 1.00 | 1.00 | **1.00** |
-| Support | 10 | 10 | 10 | 30 |
-
-**Accuracy: 100.00%**
+| Iris-setosa | 1.00 | 1.00 | 1.00 | 10 |
+| Iris-versicolor | 1.00 | 1.00 | 1.00 | 10 |
+| Iris-virginica | 1.00 | 1.00 | 1.00 | 10 |
+| **Overall Accuracy** | | | **1.00 (100%)** | 30 |
 
 ### Confusion Matrix
 ```
@@ -59,11 +57,20 @@ Zero misclassifications across all 3 classes.
 
 ---
 
-## Results Screenshot
+## Visualisations
 
 ![Results](week6_activity1_results.png)
 
-*6-panel visualisation: Sepal scatter · Petal scatter · Pearson heatmap · Petal length boxplot · Confusion matrix · Precision/Recall/F1 bar chart*
+Six-panel output:
+
+| Panel | Description |
+|---|---|
+| Sepal Dimensions + 2σ Ellipses | Scatter plot of sepal features with 2-standard-deviation covariance ellipses per class |
+| Petal Space: SVM Decision Boundary | Linear decision regions from a 2-D SVM (petal features), support vectors highlighted in red |
+| Pearson Correlation Heatmap | Correlation matrix of all 4 features — petal length/width strongly correlated (r = 0.96) |
+| SVM Linear Coefficients | Heatmap of `coef_` magnitudes per OVO pair — shows which features drive each class boundary |
+| Confusion Matrix | Perfect 10/10 per class on test set |
+| Violin Plot | Distribution of all 4 features across species, showing petal features are most discriminative |
 
 ---
 
@@ -71,13 +78,17 @@ Zero misclassifications across all 3 classes.
 
 | File | Description |
 |---|---|
-| `iris.data` | Raw dataset (UCI ML Repository) |
-| `week6_activity1_iris_svm.py` | Full Python script: load → clean → visualise → SVM → evaluate |
-| `week6_activity1_results.png` | 6-panel output visualisation |
+| `iris.data` | Raw dataset |
+| `week6_activity1_iris_svm.py` | Full Python script |
+| `week6_activity1_results.png` | Six-panel visualisation output |
 | `README.md` | This file |
 
 ---
 
-## Key Insight
+## Key Findings
 
-The SVM with a **linear kernel** achieves **100% accuracy** on this dataset. This is expected — Iris-setosa is perfectly linearly separable from the other two classes, and with proper feature scaling, the linear hyperplane cleanly separates versicolor from virginica as well. The Pearson heatmap confirms strong correlation between petal length and petal width (r = 0.96), which are the most discriminative features.
+- The SVM linear kernel achieves **100% test accuracy** on this dataset
+- **Petal length and petal width** are the most discriminative features (largest SVM coefficients for versicolor vs virginica boundary)
+- Iris-setosa is perfectly linearly separable from the other two classes (clear gap visible in petal scatter)
+- Petal length and petal width are highly correlated (r = 0.96), while sepal width shows near-zero correlation with the petal features
+- The 2σ confidence ellipses confirm that setosa does not overlap with the other two classes in sepal space
